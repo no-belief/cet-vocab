@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-27T15:23:20.301Z",
+  "generatedAt": "2026-10-27T15:27:57.759Z",
   "levels": {
     "cet4": {
       "label": "四级",
@@ -7,7 +7,7 @@
       "count": 5871,
       "withIpa": 5837,
       "withExample": 5810,
-      "withPos": 5847,
+      "withPos": 5870,
       "updatedAt": "2026-10-27"
     },
     "cet6": {
@@ -35,6 +35,11 @@
       "name": "Tatoeba 英文句库 eng_sentences",
       "url": "https://downloads.tatoeba.org/exports/per_language/eng/eng_sentences.tsv.bz2",
       "license": "CC-BY 2.0 FR"
+    },
+    {
+      "name": "ECDICT (skywind3000)",
+      "url": "https://github.com/skywind3000/ECDICT",
+      "license": "MIT"
     }
   ]
 }
