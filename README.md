@@ -24,21 +24,28 @@ python -m http.server 8000
 
 也可以用 `npx serve .`（Node 环境）。**直接双击 index.html 会因浏览器 `file://` 的 CORS 限制而无法 fetch 词库**，页面会给出对应提示。
 
-## 三、部署到 GitHub Pages
+## 三、部署与更新（已上线）
 
-仓库已内置 `.github/workflows/pages.yml`（push 到 `main` 自动部署，只把 `index.html`、`assets/`、`data/` 打进产物）。
+线上地址：**https://no-belief.github.io/cet-vocab/**（GitHub Pages，源 = `gh-pages` 分支根目录）。
 
-**首次推送**（把 `<你的账号>/<仓库名>` 换成实际值）：
+本项目的 Pages 由 **`gh-pages` 分支**驱动（推送该分支即自动部署，无需 Actions 授权）。因此**更新站点的唯一动作**是：
+
 ```bash
-git remote add origin https://github.com/<你的账号>/<仓库名>.git
-git branch -M main
-git push -u origin main
+git push origin main:gh-pages     # 把 main 的当前内容同步到发布分支
 ```
 
-**然后开启 Pages**：仓库 → Settings → Pages → Build and deployment → Source 选 **GitHub Actions**（不要选 "Deploy from a branch"）。等 Actions 变绿，站点地址为
-`https://<你的账号>.github.io/<仓库名>/`
+首次在新仓库部署：
+```bash
+git remote add origin https://github.com/<账号>/<仓库名>.git
+git push -u origin main
+git push origin main:gh-pages                      # 触发 Pages 自动启用
+```
+随后在仓库 Settings → Pages 确认 Source 为 **Deploy from a branch** → 分支 `gh-pages` / 目录 `/`。
+仓库根的 `.nojekyll` 已确保 Jekyll 不会改写文件。
 
-> 站点全部用相对路径引用资源，因此部署在仓库子路径下无需任何改动。
+> 仓库内还保留了 `.github/workflows/pages.yml`（Actions 部署方案），当前**已停用**：GitHub 要求为 Pages 站点授权，而个人令牌若没有 Pages 权限则该方案会失败。若你以后想改用 Actions 部署，在 Settings → Pages 把 Source 切成 `GitHub Actions` 并在 Actions 页启用该工作流即可。
+>
+> 站点全部用相对路径引用资源，部署在仓库子路径下无需任何改动。
 
 ## 四、数据来源与许可
 
