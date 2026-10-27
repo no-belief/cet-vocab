@@ -1,0 +1,38 @@
+{
+  "generatedAt": "2026-10-27T14:03:29.749Z",
+  "levels": {
+    "cet4": {
+      "label": "四级",
+      "file": "cet4.json",
+      "count": 5871,
+      "withIpa": 5837,
+      "withExample": 5810,
+      "withPos": 1675
+    },
+    "cet6": {
+      "label": "六级",
+      "file": "cet6.json",
+      "count": 3318,
+      "withIpa": 3318,
+      "withExample": 3298,
+      "withPos": 3285
+    }
+  },
+  "sources": [
+    {
+      "name": "qwerty-learner CET4_T / DanCiDeJianFa_4 / Level4luan_2_T",
+      "url": "https://github.com/Kaiyiwing/qwerty-learner/tree/master/public/dicts",
+      "license": "MIT"
+    },
+    {
+      "name": "qwerty-learner CET6_T / DanCiDeJianFa_6",
+      "url": "https://github.com/Kaiyiwing/qwerty-learner/tree/master/public/dicts",
+      "license": "MIT"
+    },
+    {
+      "name": "Tatoeba 英文句库 eng_sentences",
+      "url": "https://downloads.tatoeba.org/exports/per_language/eng/eng_sentences.tsv.bz2",
+      "license": "CC-BY 2.0 FR"
+    }
+  ]
+}

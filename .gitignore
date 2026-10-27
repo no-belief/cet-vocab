@@ -1,0 +1,11 @@
+# 数据构建缓存（原始语料下载，体积很大，不入库）
+.cache/
+
+# 构建/部署产物
+_site/
+node_modules/
+
+# 系统与编辑器
+.DS_Store
+Thumbs.db
+*.log

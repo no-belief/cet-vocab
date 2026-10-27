@@ -1,0 +1,342 @@
+/* assets/css/features/cards.css — 翻卡记忆（owner: S3）
+ * 只用 base.css / components.css 的令牌与通用类，不重定义通用类。
+ */
+
+.cards__bar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cards__bar-row {
+  align-items: center;
+  gap: 8px;
+}
+
+.cards__levels {
+  gap: 6px;
+  flex-wrap: nowrap;
+}
+
+.cards__level {
+  flex: 0 0 auto;
+}
+
+.cards__level.is-active {
+  border-color: var(--brand);
+  background: var(--brand-weak);
+  color: var(--brand);
+  font-weight: 600;
+}
+
+.cards__scope-wrap {
+  flex: 0 1 132px;
+  min-width: 112px;
+}
+
+.cards__scope {
+  min-width: 0;
+}
+
+.cards__shuffle {
+  flex: 0 0 auto;
+}
+
+/* ---------- 进度 ---------- */
+.cards__progress {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cards__progress-bar {
+  height: 6px;
+}
+
+.cards__meta {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- 卡片 ---------- */
+.cards__stage {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.flip-card {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: 292px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--text);
+  text-align: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  perspective: 1200px;
+}
+
+.flip-card__inner {
+  position: relative;
+  display: block;
+  min-height: 292px;
+  transform-style: preserve-3d;
+  transition: transform 0.45s ease;
+}
+
+.flip-card.is-flipped .flip-card__inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card__face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 0;
+  padding: var(--pad-lg) var(--pad);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  overflow-y: auto;
+  overflow-wrap: anywhere;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.flip-card__face--front {
+  transform: rotateY(0deg);
+}
+
+.flip-card__face--back {
+  transform: rotateY(180deg);
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
+  gap: 6px;
+}
+
+.cards__word {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  overflow-wrap: anywhere;
+}
+
+.cards__word--back {
+  font-size: 19px;
+  color: var(--text);
+}
+
+.cards__ipa {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.cards__hint {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.cards__meanings {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  width: 100%;
+}
+
+.cards__meaning {
+  font-size: 15px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.cards__example {
+  min-width: 0;
+  width: 100%;
+  padding-top: 6px;
+  border-top: 1px solid var(--line);
+}
+
+.cards__ex-en {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+
+.cards__ex-zh {
+  margin-top: 2px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+.cards__noex {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* ---------- 操作 ---------- */
+.cards__actions {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) minmax(0, 1fr);
+  gap: 8px;
+  align-items: stretch;
+}
+
+.cards__prev {
+  flex: 0 0 auto;
+  padding: 5px 8px;
+  font-size: 12px;
+}
+
+.cards__known,
+.cards__unknown {
+  min-width: 0;
+  padding: 8px 10px;
+}
+
+.cards__unknown {
+  border-color: var(--err);
+  color: var(--err);
+}
+
+.cards__unknown:hover {
+  background: var(--surface-2);
+}
+
+.cards__key {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.cards__known .cards__key {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* ---------- 结束总结 ---------- */
+.cards__done {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
+}
+
+.cards__done-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.cards__done-desc {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.cards__done-stats {
+  margin: 2px 0;
+}
+
+.cards__again {
+  align-self: center;
+  min-width: 148px;
+}
+
+.cards__empty {
+  min-width: 0;
+}
+
+/* ---------- 断点 ---------- */
+@media (min-width: 640px) {
+  .flip-card,
+  .flip-card__inner {
+    min-height: 320px;
+  }
+
+  .cards__word {
+    font-size: 32px;
+  }
+
+  .cards__word--back {
+    font-size: 20px;
+  }
+
+  .cards__actions {
+    gap: 10px;
+  }
+
+  .cards__key {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 359px) {
+  .cards__actions {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .cards__prev {
+    grid-column: 1 / -1;
+  }
+
+  .cards__word {
+    font-size: 24px;
+  }
+
+  .cards__key {
+    display: none;
+  }
+}
+
+/* ---------- 降低动效：3D 翻转改成淡入淡出 ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .flip-card {
+    perspective: none;
+  }
+
+  .flip-card__inner,
+  .flip-card.is-flipped .flip-card__inner {
+    transform: none;
+    transition: none;
+    transform-style: flat;
+  }
+
+  .flip-card__face {
+    transform: none !important;
+    transition: opacity 0.12s linear;
+    backface-visibility: visible;
+    -webkit-backface-visibility: visible;
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .flip-card:not(.is-flipped) .flip-card__face--front,
+  .flip-card.is-flipped .flip-card__face--back {
+    opacity: 1;
+    visibility: visible;
+  }
+}

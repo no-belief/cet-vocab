@@ -1,0 +1,340 @@
+/* base.css — 设计令牌 / 重置 / 布局 / 导航 / 工具类（owner: S2） */
+
+:root {
+  color-scheme: light;
+
+  /* 色彩 */
+  --bg: #f5f6fa;
+  --surface: #ffffff;
+  --surface-2: #eff1f7;
+  --text: #1b2030;
+  --muted: #616b80;
+  --line: #e3e6ef;
+  --brand: #4b4fbf;
+  --brand-weak: #e8e9fb;
+  --ok: #2f9e6a;
+  --err: #cf443c;
+  --warn: #b4791a;
+
+  /* 形状与阴影 */
+  --radius: 16px;
+  --radius-sm: 10px;
+  --shadow: 0 1px 2px rgba(23, 28, 50, 0.05), 0 10px 26px rgba(23, 28, 50, 0.07);
+
+  /* 节奏 */
+  --pad: 14px;
+  --pad-lg: 24px;
+  --wrap: 1080px;
+
+  /* 字体（仅系统字体栈，无外链字体） */
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  --font-display: "Segoe UI", -apple-system, BlinkMacSystemFont, "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, p, figure, blockquote, dl, dd {
+  margin: 0;
+}
+
+ul, ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: var(--brand);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+img, svg, video {
+  max-width: 100%;
+}
+
+img, svg {
+  display: block;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* 焦点环 */
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* ---------- 顶栏 ---------- */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "brand hud"
+    "nav nav";
+  align-items: center;
+  gap: 8px 10px;
+  padding: 10px var(--pad);
+  background: rgba(245, 246, 250, 0.94);
+  border-bottom: 1px solid var(--line);
+  -webkit-backdrop-filter: saturate(140%) blur(8px);
+  backdrop-filter: saturate(140%) blur(8px);
+}
+
+.app-brand {
+  grid-area: brand;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--text);
+}
+
+.app-brand__mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 22px;
+  padding: 0 7px;
+  border-radius: 7px;
+  background: var(--brand);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.app-brand__text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.app-nav {
+  grid-area: nav;
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 2px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.app-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-link {
+  flex: 0 0 auto;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  background: var(--surface-2);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.nav-link.is-active {
+  background: var(--brand-weak);
+  color: var(--brand);
+  font-weight: 600;
+}
+
+.app-hud {
+  grid-area: hud;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 4px 10px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.hud__item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.hud__value {
+  color: var(--text);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.hud__hint {
+  flex: 1 0 100%;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--muted);
+  text-align: right;
+}
+
+/* ---------- 视图容器 ---------- */
+.view {
+  width: 100%;
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: var(--pad) var(--pad) calc(var(--pad) + 48px);
+}
+
+.view > * + * {
+  margin-top: var(--pad);
+}
+
+/* ---------- 工具类 ---------- */
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--pad);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- 断点 ---------- */
+@media (min-width: 640px) {
+  .nav-link {
+    padding: 8px 14px;
+    font-size: 14px;
+  }
+
+  .app-brand {
+    font-size: 16px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+
+  .hud__hint {
+    text-align: left;
+  }
+}
+
+@media (min-width: 768px) {
+  .app-header {
+    padding: 12px var(--pad-lg);
+  }
+
+  .view {
+    padding: var(--pad-lg) var(--pad-lg) calc(var(--pad-lg) + 56px);
+  }
+}
+
+@media (min-width: 900px) {
+  .app-header {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas: "brand nav hud";
+    gap: 18px;
+    padding: 12px 28px;
+  }
+
+  .app-nav {
+    justify-content: flex-start;
+    padding-bottom: 0;
+  }
+
+  .app-hud {
+    font-size: 13px;
+  }
+
+  .hud__hint {
+    flex: 0 0 auto;
+    max-width: 32ch;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+}
+
+/* ---------- 动效偏好 ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

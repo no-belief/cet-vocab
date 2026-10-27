@@ -1,0 +1,273 @@
+/* features/wrong.css — 错词回顾（owner: S5）。只使用 base.css 的令牌与通用类。 */
+
+.wrong {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad);
+  min-width: 0;
+}
+
+/* ---------- 顶部说明 ---------- */
+.wrong-intro__title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.wrong-intro__desc {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+.wrong-empty__btn {
+  margin-top: 10px;
+}
+
+.wrong-stats {
+  margin-top: 12px;
+}
+
+.wrong-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.wrong-toolbar .btn:first-child {
+  flex: 1 1 160px;
+}
+
+/* ---------- 列表 ---------- */
+.wrong-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.wrong-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  min-width: 0;
+}
+
+.wrong-row__main {
+  flex: 1 1 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.wrong-row__head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  align-items: baseline;
+}
+
+.wrong-row__word {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.wrong-row__count {
+  color: var(--err);
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.wrong-row__sub {
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.wrong-row__meta {
+  color: var(--muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.wrong-row__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.wrong-row__actions .btn.is-on {
+  border-color: var(--brand);
+  background: var(--brand-weak);
+  color: var(--brand);
+}
+
+.wrong-row__remove {
+  color: var(--err);
+  border-color: var(--line);
+}
+
+.wrong-row__remove:hover {
+  border-color: var(--err);
+  background: var(--surface);
+}
+
+.wrong-row__example {
+  flex: 1 1 100%;
+  margin-top: 2px;
+  padding: 10px 12px;
+  border-left: 3px solid var(--line);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: var(--surface-2);
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+.wrong-foot {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- 集中复习 ---------- */
+.wrong-review__head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.wrong-review__idx {
+  font-size: 14px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.wrong-review__meta {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.wrong-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 168px;
+  justify-content: center;
+  transition: background-color 0.15s ease;
+}
+
+.wrong-card.is-flipped {
+  background: var(--surface-2);
+}
+
+.wrong-card__face {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.wrong-card__head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  align-items: baseline;
+}
+
+.wrong-card__word {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 8vw, 34px);
+  font-weight: 700;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.wrong-card__ipa {
+  color: var(--muted);
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}
+
+.wrong-card__mean {
+  font-size: 16px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+.wrong-card__ex {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+.wrong-card__tip {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.wrong-review__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.wrong-review__actions .btn {
+  flex: 1 1 110px;
+}
+
+.wrong-review__exit {
+  align-self: flex-start;
+}
+
+/* ---------- 焦点与动效 ---------- */
+.wrong-row__actions .btn:focus-visible,
+.wrong-card:focus-visible,
+.wrong-review__actions .btn:focus-visible,
+.wrong-empty__btn:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+@media (min-width: 640px) {
+  .wrong-row {
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .wrong-row__main {
+    flex: 1 1 auto;
+  }
+
+  .wrong-row__example {
+    flex: 1 1 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wrong-card {
+    transition: none;
+  }
+}

@@ -1,0 +1,321 @@
+/* assets/css/features/progress.css — 学习进度与掌握程度（owner: S4）
+ * 只给 .pv- / .pbar / .pw- 命名空间写样式：不重定义 base/components 的通用类，颜色全部走令牌。
+ */
+
+.progress-view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad);
+}
+
+.pv-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+}
+
+.pv-title {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--text);
+}
+
+.pv-head .select {
+  width: auto;
+  min-width: 112px;
+  max-width: 100%;
+}
+
+.pv-desc {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.pv-hint {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.pv-warn {
+  margin-top: 8px;
+  color: var(--err);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.pv-overview .stat-grid {
+  margin-top: 10px;
+}
+
+/* ---------- 掌握度堆叠条 ---------- */
+.pv-bars {
+  margin-top: 10px;
+}
+
+.pbar + .pbar {
+  margin-top: 14px;
+}
+
+.pbar__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 10px;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+
+.pbar__name {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.pbar__sum {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.pbar__track {
+  display: flex;
+  width: 100%;
+  height: 14px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.pbar__seg {
+  display: block;
+  height: 100%;
+}
+
+.pbar__seg--mastered {
+  background: var(--ok);
+}
+
+.pbar__seg--learning {
+  background: var(--brand);
+}
+
+.pbar__seg--untouched {
+  background: var(--line);
+}
+
+.pbar__nums {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.pbar__num--mastered {
+  color: var(--ok);
+  font-weight: 600;
+}
+
+.pbar__num--learning {
+  color: var(--brand);
+  font-weight: 600;
+}
+
+/* ---------- 单词级列表 ---------- */
+.pv-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.pv-search {
+  flex: 1 1 100%;
+  min-width: 0;
+}
+
+.pv-sort {
+  flex: 1 1 100%;
+  min-width: 0;
+}
+
+.pv-list {
+  margin-top: 8px;
+}
+
+.pw-list {
+  display: block;
+}
+
+.pw-row {
+  padding: 9px 0;
+  border-top: 1px solid var(--line);
+}
+
+.pw-row:first-child {
+  border-top: 0;
+}
+
+.pw-row__main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px;
+}
+
+.pw-row__word {
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.pw-row__ipa {
+  color: var(--muted);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.pw-row__state {
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.pw-row__state--mastered {
+  background: var(--surface-2);
+  color: var(--ok);
+}
+
+.pw-row__state--learning {
+  background: var(--brand-weak);
+  color: var(--brand);
+}
+
+.pw-row__mean {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.pw-row__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.pw-row__box,
+.pw-row__last {
+  white-space: nowrap;
+}
+
+.pw-box {
+  display: inline-flex;
+  gap: 3px;
+  align-items: center;
+}
+
+.pw-box__cell {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  background: var(--line);
+}
+
+.pw-box__cell.is-on {
+  background: var(--brand);
+}
+
+.pw-box__cell.is-mastered {
+  background: var(--ok);
+}
+
+/* ---------- 图例 ---------- */
+.pv-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.pv-legend--stack {
+  gap: 6px 16px;
+}
+
+.pv-legend__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.pv-legend__swatch {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  background: var(--line);
+}
+
+.pv-legend__swatch--mastered {
+  background: var(--ok);
+}
+
+.pv-legend__swatch--learning {
+  background: var(--brand);
+}
+
+.pv-legend__swatch--untouched {
+  background: var(--line);
+}
+
+/* ---------- 重置 ---------- */
+.pv-reset__btn {
+  margin-top: 10px;
+}
+
+.pv-reset__row {
+  margin-top: 8px;
+  gap: 8px;
+}
+
+@media (min-width: 640px) {
+  .pv-title {
+    font-size: 18px;
+  }
+
+  .pv-search {
+    flex: 1 1 220px;
+  }
+
+  .pv-sort {
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 160px;
+  }
+
+  .pbar__track {
+    height: 16px;
+  }
+}
