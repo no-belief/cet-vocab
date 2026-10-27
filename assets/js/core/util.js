@@ -177,3 +177,54 @@ export function emptyState(title, desc) {
   if (desc != null && desc !== '') kids.push(el('p', { class: 'empty__desc', text: String(desc) }));
   return el('div', { class: 'empty' }, kids);
 }
+
+/**
+ * 使用浏览器 SpeechSynthesis API 播放单词发音
+ * @param {string} word - 要播放的单词
+ */
+export function speak(word) {
+  if (typeof window === 'undefined' || !window.speechSynthesis) {
+    console.warn('SpeechSynthesis not supported');
+    return;
+  }
+  if (!word || typeof word !== 'string') return;
+  const utterance = new SpeechSynthesisUtterance(word.trim());
+  utterance.lang = 'en-US';
+  utterance.rate = 0.9;
+  speechSynthesis.cancel(); // 停止当前播放
+  speechSynthesis.speak(utterance);
+}
+
+/**
+ * 创建音频播放按钮
+ * @param {string} word - 要播放的单词
+ * @returns {HTMLButtonElement} 按钮元素
+ */
+export function createAudioButton(word) {
+  const btn = el('button', {
+    type: 'button',
+    class: 'audio-btn',
+    'aria-label': '播放发音',
+    tabindex: '0',
+  });
+  
+  // SVG 喇叭图标
+  const svg = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>';
+  btn.innerHTML = svg;
+  
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    speak(word);
+  });
+  
+  btn.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      e.stopPropagation();
+      speak(word);
+    }
+  });
+  
+  return btn;
+}
+

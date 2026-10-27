@@ -4,7 +4,7 @@
  */
 import { bank } from '../core/bank.js';
 import { store } from '../core/store.js';
-import { el, emptyState, fmtPct, toast } from '../core/util.js';
+import { el, emptyState, fmtPct, toast, createAudioButton } from '../core/util.js';
 
 const LEVELS = ['cet4', 'cet6'];
 const LEVEL_TEXT = { cet4: '四级', cet6: '六级' };
@@ -364,6 +364,7 @@ export const route = {
       const kids = [
         el('div', { class: 'pw-row__main' }, [
           el('span', { class: 'pw-row__word', text: row.word }),
+          row.word ? createAudioButton(row.word) : null,
           el('span', { class: levelChipClass(row.level), text: levelText(row.level) }),
           row.ipa ? el('span', { class: 'pw-row__ipa', text: '[' + row.ipa + ']' }) : null,
           el('span', { class: 'pw-row__state pw-row__state--' + row.state, text: STATE_LABEL[row.state] || row.state }),

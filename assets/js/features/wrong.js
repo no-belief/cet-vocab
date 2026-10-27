@@ -4,7 +4,7 @@
 import { store } from '../core/store.js';
 import { bank } from '../core/bank.js';
 import { router } from '../core/router.js';
-import { el, emptyState, toast } from '../core/util.js';
+import { el, emptyState, toast, createAudioButton } from '../core/util.js';
 import { ipaText, meaningsText, exampleText, relTime } from './quiz.js';
 
 /* ================= 纯逻辑 ================= */
@@ -201,8 +201,10 @@ function mount(root) {
     if (mean) parts.push(mean);
     const ex = exampleText(item);
 
+    const wordText = String(item.word || entry.word || '—');
     const head = el('div', { class: 'wrong-row__head' }, [
-      el('span', { class: 'wrong-row__word', text: String(item.word || entry.word || '—') }),
+      el('span', { class: 'wrong-row__word', text: wordText }),
+      wordText && wordText !== '—' ? createAudioButton(wordText) : null,
       chipEl(entry.level),
       el('span', { class: 'wrong-row__count', text: '错 ' + String(entry.count) + ' 次' }),
     ]);
@@ -318,11 +320,13 @@ function mount(root) {
     );
 
     const card = el('section', { class: 'panel wrong-card' + (s.flipped ? ' is-flipped' : ''), 'aria-live': 'polite' });
+    const reviewWord = String(item.word || entry.word || '—');
     if (!s.flipped) {
       card.appendChild(
         el('div', { class: 'wrong-card__face wrong-card__front' }, [
           el('div', { class: 'wrong-card__head' }, [
-            el('span', { class: 'wrong-card__word', text: String(item.word || entry.word || '—') }),
+            el('span', { class: 'wrong-card__word', text: reviewWord }),
+            reviewWord && reviewWord !== '—' ? createAudioButton(reviewWord) : null,
             chipEl(entry.level),
           ]),
           el('p', { class: 'wrong-card__ipa', text: ipaText(item) || '（无音标）' }),
@@ -335,7 +339,8 @@ function mount(root) {
       const pos = item && item.pos ? String(item.pos) : '';
       back.appendChild(
         el('div', { class: 'wrong-card__head' }, [
-          el('span', { class: 'wrong-card__word', text: String(item.word || entry.word || '—') }),
+          el('span', { class: 'wrong-card__word', text: reviewWord }),
+          reviewWord && reviewWord !== '—' ? createAudioButton(reviewWord) : null,
           chipEl(entry.level),
         ])
       );

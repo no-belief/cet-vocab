@@ -4,7 +4,7 @@
  */
 import { bank } from '../core/bank.js';
 import { store } from '../core/store.js';
-import { el, shuffle, fmtPct, emptyState } from '../core/util.js';
+import { el, shuffle, fmtPct, emptyState, createAudioButton } from '../core/util.js';
 import { ipaText, formatExample, stateMapOf, levelFromSettings } from './browse.js';
 
 const DECK_LIMIT = 60;
@@ -255,7 +255,9 @@ export const route = {
       setFlipped(false);
 
       frontFace.innerHTML = '';
-      frontFace.appendChild(el('span', { class: 'cards__word', text: String(item.word || '') }));
+      const wordText = String(item.word || '');
+      frontFace.appendChild(el('span', { class: 'cards__word', text: wordText }));
+      if (wordText) frontFace.appendChild(createAudioButton(wordText));
       const ipa = ipaText(item.ipa);
       if (ipa) frontFace.appendChild(el('span', { class: 'cards__ipa', text: ipa }));
       frontFace.appendChild(el('p', { class: 'cards__hint', text: '点击卡片或按空格翻面' }));

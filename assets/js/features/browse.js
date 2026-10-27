@@ -4,7 +4,7 @@
  */
 import { bank } from '../core/bank.js';
 import { store } from '../core/store.js';
-import { el, debounce, emptyState } from '../core/util.js';
+import { el, debounce, emptyState, createAudioButton } from '../core/util.js';
 
 const PAGE_SIZE = 60;
 const SEARCH_DEBOUNCE_MS = 200;
@@ -163,8 +163,10 @@ function exampleBlock(example) {
 /** 单张词条卡（含自管的「例句」展开/收起） */
 function wordCard(item) {
   const ipa = ipaText(item && item.ipa);
+  const wordText = String(item && item.word != null ? item.word : '');
   const head = el('div', { class: 'word-card__head' }, [
-    el('span', { class: 'word-card__word', text: String(item && item.word != null ? item.word : '') }),
+    el('span', { class: 'word-card__word', text: wordText }),
+    wordText ? createAudioButton(wordText) : null,
     ipa ? el('span', { class: 'word-card__ipa', text: ipa }) : null,
   ]);
   if (item && item.pos) head.appendChild(el('span', { class: 'chip word-card__pos', text: String(item.pos) }));

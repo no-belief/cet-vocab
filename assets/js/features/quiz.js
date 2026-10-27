@@ -4,7 +4,7 @@
 import { store } from '../core/store.js';
 import { bank } from '../core/bank.js';
 import { router } from '../core/router.js';
-import { el, fmtPct, toast } from '../core/util.js';
+import { el, fmtPct, toast, createAudioButton } from '../core/util.js';
 
 const SIZES = [10, 20, 30];
 const RANGES = [
@@ -303,8 +303,10 @@ function segField(label, opts, value, onPick, after, rootEl) {
 
 function wordEcho(item) {
   const it = item || {};
+  const wordText = trimStr(it.word);
   const head = [
-    el('span', { class: 'quiz-echo__word', text: trimStr(it.word) }),
+    el('span', { class: 'quiz-echo__word', text: wordText }),
+    wordText ? createAudioButton(wordText) : null,
   ];
   const ipa = ipaText(it);
   if (ipa) head.push(el('span', { class: 'quiz-echo__ipa', text: ipa }));
@@ -440,13 +442,19 @@ function mount(root) {
       ])
     );
 
-    wrap.appendChild(
-      el('section', { class: 'panel quiz-card' }, [
+    const quizCardKids = [
         el('span', { class: 'quiz-card__mode', text: q.mode === 'zh2en' ? '中→英 选词' : '英→中 选义' }),
         el('p', { class: 'quiz-card__prompt', text: q.prompt || '—' }),
-        q.hint ? el('p', { class: 'quiz-card__hint', text: q.hint }) : null,
-      ])
-    );
+      ];
+      // Add audio button for the word (en2zh shows word in prompt, zh2en shows meaning but we can still play the word)
+      const quizWord = trimStr(q.item && q.item.word);
+      if (quizWord) {
+        quizCardKids.push(el('div', { class: 'quiz-card__audio' }, [createAudioButton(quizWord)]));
+      }
+      if (q.hint) quizCardKids.push(el('p', { class: 'quiz-card__hint', text: q.hint }));
+      wrap.appendChild(
+        el('section', { class: 'panel quiz-card' }, quizCardKids)
+      );
 
     const optButtons = [];
     for (let i = 0; i < q.options.length; i++) {

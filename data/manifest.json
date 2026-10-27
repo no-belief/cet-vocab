@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-27T14:03:29.749Z",
+  "generatedAt": "2026-10-27T15:23:20.301Z",
   "levels": {
     "cet4": {
       "label": "四级",
@@ -7,7 +7,8 @@
       "count": 5871,
       "withIpa": 5837,
       "withExample": 5810,
-      "withPos": 1675
+      "withPos": 5847,
+      "updatedAt": "2026-10-27"
     },
     "cet6": {
       "label": "六级",
@@ -15,7 +16,8 @@
       "count": 3318,
       "withIpa": 3318,
       "withExample": 3298,
-      "withPos": 3285
+      "withPos": 3318,
+      "updatedAt": "2026-10-27"
     }
   },
   "sources": [

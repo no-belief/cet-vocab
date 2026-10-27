@@ -4,7 +4,7 @@
 import { bank } from '../core/bank.js';
 import { store } from '../core/store.js';
 import { router } from '../core/router.js';
-import { el, emptyState, fmtPct, toast } from '../core/util.js';
+import { el, emptyState, fmtPct, toast, createAudioButton } from '../core/util.js';
 
 const WEEKDAYS = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
 const QUICK_GOALS = [10, 20, 30, 50];
@@ -230,6 +230,7 @@ export const route = {
 
       const head = [
         el('span', { class: 'plan-word__word', text: word || key }),
+        word ? createAudioButton(word) : null,
         el('span', { class: levelChipClass(parts.level), text: levelText(parts.level) }),
       ];
       if (ipa) head.push(el('span', { class: 'plan-word__ipa', text: '[' + ipa + ']' }));

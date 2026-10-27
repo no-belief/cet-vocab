@@ -8,6 +8,7 @@ scripts/build-data.py - 从 .cache/ 原始文件生成 data/cet4.json / cet6.jso
   CET6_T.json, DanCiDeJianFa_6.json                        -> 六级
   eng_sentences.tsv.bz2                                    -> 例句主源（Tatoeba）
   4000_Essential_English_Words-sentence.json                -> 例句退化源
+  ecdict.csv                                                 -> 词性补全源（ECDICT）
 
 只用标准库。用法：
   python scripts/build-data.py
@@ -45,6 +46,7 @@ LEVELS = [
 
 TATOEBA_BZ2 = os.path.join(CACHE, "eng_sentences.tsv.bz2")
 ESSENTIAL_JSON = os.path.join(CACHE, "4000_Essential_English_Words-sentence.json")
+ECDICT_CSV = os.path.join(CACHE, "ecdict.csv")
 
 TAG_RE = re.compile(r"<[^>]*>")
 # 词性标记：前置 "n. " 与后置 "(vt.)"（半/全角括号）两端都要认。长词在前，避免 vt 被 v 抢先。
@@ -63,6 +65,96 @@ STOP_SHORT = set(
     how why yes let did has had have too one two off put own new old see now day
     man men way may get got go do does done use used per via vs etc""".split()
 )
+
+
+# ---------- ECDICT 词性补全 ----------
+_ECDICT_POS_RE = re.compile(
+    r"^(n|v|vt|vi|a|adj|adv|prep|conj|pron|num|art|int|interj|aux)\.", re.I
+)
+_ECDICT_POS_NORM = {
+    "a": "adj.", "adj": "adj.", "interj": "int.", "int": "int.",
+    "n": "n.", "v": "v.", "vt": "vt.", "vi": "vi.",
+    "adv": "adv.", "prep": "prep.", "conj": "conj.",
+    "pron": "pron.", "num": "num.", "art": "art.", "aux": "aux.",
+}
+
+
+def _parse_csv_line(line):
+    """极简 CSV 解析：只处理双引号转义，够用。"""
+    result = []
+    current = []
+    in_quotes = False
+    i = 0
+    while i < len(line):
+        ch = line[i]
+        if in_quotes:
+            if ch == '"':
+                if i + 1 < len(line) and line[i + 1] == '"':
+                    current.append('"')
+                    i += 1
+                else:
+                    in_quotes = False
+            else:
+                current.append(ch)
+        else:
+            if ch == '"':
+                in_quotes = True
+            elif ch == ',':
+                result.append("".join(current))
+                current = []
+            else:
+                current.append(ch)
+        i += 1
+    result.append("".join(current))
+    return result
+
+
+def load_ecdict_pos():
+    """从 ECDICT CSV 提取 word -> pos 映射。
+
+    ECDICT 的 pos 列几乎全空；词性信息在 translation 列的开头（如 "n. ..."、"a. ..."）。
+    返回 dict，key 为小写单词，value 为规范化后的词性字符串（如 "n."、"adj."）。
+    """
+    if not os.path.exists(ECDICT_CSV):
+        log("!! ECDICT CSV 不存在: " + ECDICT_CSV)
+        return {}
+    word_pos = {}
+    total = 0
+    with_pos = 0
+    t0 = time.time()
+    with io.open(ECDICT_CSV, "r", encoding="utf-8", errors="replace") as fh:
+        header = fh.readline()  # skip header
+        for line in fh:
+            total += 1
+            cols = _parse_csv_line(line.rstrip("\n").rstrip("\r"))
+            if len(cols) < 4:
+                continue
+            word = cols[0].strip().lower()
+            translation = cols[3]
+            if not word or not translation:
+                continue
+            m = _ECDICT_POS_RE.match(translation)
+            if m:
+                raw_pos = m.group(1).lower()
+                norm = _ECDICT_POS_NORM.get(raw_pos)
+                if norm and word not in word_pos:
+                    word_pos[word] = norm
+                    with_pos += 1
+    log("  ECDICT: " + str(total) + " 行, " + str(with_pos) + " 词有词性, "
+        + str(len(word_pos)) + " 唯一, " + str(round(time.time() - t0, 1)) + "s")
+    return word_pos
+
+
+def merge_ecdict_pos(items, ecdict_pos):
+    """对 pos 为 None 的词条，从 ECDICT 补全。返回补全数量。"""
+    filled = 0
+    for it in items:
+        if it["pos"] is None:
+            pos = ecdict_pos.get(it["word"])
+            if pos:
+                it["pos"] = pos
+                filled += 1
+    return filled
 
 
 def log(*args):
@@ -347,6 +439,17 @@ def main():
         per_level[cfg["level"]] = items
         log("  -> " + str(len(items)) + " 词")
 
+    log("== ECDICT 词性补全 ==")
+    ecdict_pos = load_ecdict_pos()
+    if ecdict_pos:
+        for cfg in LEVELS:
+            lvl = cfg["level"]
+            items = per_level[lvl]
+            before = sum(1 for it in items if it["pos"])
+            filled = merge_ecdict_pos(items, ecdict_pos)
+            after = sum(1 for it in items if it["pos"])
+            log("  " + lvl + ": 补全 " + str(filled) + " 词 (" + str(before) + " -> " + str(after) + ")")
+
     all_targets = set()
     for items in per_level.values():
         for it in items:
@@ -432,6 +535,11 @@ def main():
                 "name": "Tatoeba 英文句库 eng_sentences",
                 "url": "https://downloads.tatoeba.org/exports/per_language/eng/eng_sentences.tsv.bz2",
                 "license": "CC-BY 2.0 FR",
+            },
+            {
+                "name": "ECDICT 词库 ecdict.csv",
+                "url": "https://github.com/skywind3000/ECDICT",
+                "license": "MIT",
             },
         ],
     }
